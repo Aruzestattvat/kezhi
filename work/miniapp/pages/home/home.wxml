@@ -1,0 +1,88 @@
+<view class="page">
+  <view class="page-head">
+    <view>
+      <text class="eyebrow">TUTOR VALUE · 嘉兴</text>
+      <view class="page-title">哪一单更值得跑？</view>
+    </view>
+    <button class="primary-button import-button" bindtap="openImport">＋ 导入</button>
+  </view>
+
+  <view class="hero card">
+    <text>{{heroLabel}}</text>
+    <view class="hero-money"><text>¥</text>{{stats.best}}</view>
+    <text class="hero-note">{{heroNote}}</text>
+  </view>
+
+  <view class="stat-grid">
+    <view class="stat card"><text>符合条件</text><text class="stat-number">{{stats.eligible}}</text><text class="stat-note">已 PASS {{stats.passed}} 条</text></view>
+    <view class="stat card"><text>待计算</text><text class="stat-number">{{stats.pending}}</text><text class="stat-note">{{pendingLabel}}</text></view>
+    <view class="stat card"><text>平均通勤</text><text class="stat-number">{{stats.average}}</text><text class="stat-note">分钟 / 单程</text></view>
+  </view>
+
+  <view class="toolbar">
+    <view class="search-box">
+      <text>⌕</text>
+      <input placeholder="搜索科目、年级或地址" value="{{search}}" bindinput="onSearch" />
+    </view>
+    <picker mode="selector" range="{{travelModeLabels}}" value="{{travelModeIndex}}" bindchange="changeTravelMode">
+      <view class="mode-picker">出行：{{travelModeLabel}}⌄</view>
+    </picker>
+  </view>
+
+  <view class="scope-row">
+    <view class="filters">
+      <view class="filter-line">
+        <button class="filter {{filter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="setFilter">全部</button>
+        <button class="filter {{filter === 'ready' ? 'active' : ''}}" data-filter="ready" bindtap="setFilter">划算</button>
+        <button class="filter {{filter === 'pending' ? 'active' : ''}}" data-filter="pending" bindtap="setFilter">待计算</button>
+        <button class="filter {{filter === 'passed' ? 'active' : ''}}" data-filter="passed" bindtap="setFilter">已PASS</button>
+      </view>
+    </view>
+  </view>
+  <view class="calc-bar">
+    <button class="calc-button" disabled="{{calculating || stats.pending === 0}}" bindtap="calculatePending">
+      {{calculating ? calculateLabel : (stats.pending ? '计算 ' + stats.pending + ' 条待计算订单' : '已全部计算')}}
+    </button>
+  </view>
+
+  <view class="ranking-controls">
+    <picker mode="selector" range="{{weekdayLabels}}" value="{{weekdayIndex}}" bindchange="changeWeekday">
+      <view class="ranking-picker">{{weekdayLabels[weekdayIndex]}}⌄</view>
+    </picker>
+    <picker mode="selector" range="{{rankingModeLabels}}" value="{{rankingModeIndex}}" bindchange="changeRankingMode">
+      <view class="ranking-picker">{{rankingModeLabel}}⌄</view>
+    </picker>
+  </view>
+
+  <view wx:if="{{selectedGroup !== 'all'}}" class="group-scope">
+    <text>当前群：{{selectedGroup}}</text>
+    <text bindtap="clearGroupFilter">查看全部</text>
+  </view>
+
+  <view class="list card" wx:if="{{orders.length}}">
+    <view class="list-head"><text>SMART RANKING</text><text class="list-title">{{listTitle}}</text><text class="list-count">{{orders.length}} 条</text></view>
+    <view class="order-card" wx:for="{{orders}}" wx:key="id" data-id="{{item.id}}" bindtap="openDetail">
+      <view class="rank">{{item.rank}}</view>
+      <view class="order-main">
+        <view class="order-title">
+          <text class="order-title-text">{{item.title}}</text>
+          <view class="tag {{item.statusClass}}">{{item.statusLabel}}</view>
+        </view>
+        <text class="order-place">{{item.address || '地址待确认'}} · {{item.schedule || '时间待确认'}}</text>
+        <view class="order-meta">
+          <text>课时价 {{item.rateLabel}}</text>
+          <text>授课 {{item.hoursLabel}}</text>
+          <text>往返 {{item.distanceLabel}}</text>
+          <text>出行 {{item.travelCostLabel}}</text>
+          <text>月收入 {{item.monthlyIncomeLabel}}</text>
+        </view>
+      </view>
+      <view class="order-value"><text class="order-value-note">{{item.rankValueNote}}</text><text class="order-value-money">{{item.rankValueLabel}}</text><text>{{item.rankValueUnit}}</text></view>
+    </view>
+  </view>
+
+  <view class="empty card" wx:else>
+    <text class="empty-title">还没有符合条件的订单</text>
+    <text class="empty-copy">从微信群复制消息，再点右上角“导入”即可开始。</text>
+  </view>
+</view>

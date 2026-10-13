@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="page-head">
+    <view><text class="eyebrow">GROUP PAGES</text><view class="page-title">群聊管理</view></view>
+    <button class="primary-button" bindtap="openImport">＋ 导入</button>
+  </view>
+
+  <view class="group-list" wx:if="{{groups.length}}">
+    <view class="group-card card" wx:for="{{groups}}" wx:key="name" data-name="{{item.name}}" bindtap="selectGroup">
+      <view class="group-avatar">群</view>
+      <view class="group-copy">
+        <text class="group-name">{{item.name}}</text>
+        <text class="group-meta">{{item.count}} 条订单 · {{item.pendingText}}</text>
+      </view>
+      <button class="group-delete" data-name="{{item.name}}" catchtap="clearGroup">清空</button>
+    </view>
+  </view>
+  <view class="empty card" wx:else>
+    <text class="empty-title">还没有群聊页面</text>
+    <text class="empty-copy">首次导入时填写群聊名称，会自动建立独立页面。</text>
+  </view>
+</view>

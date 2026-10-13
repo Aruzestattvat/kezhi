@@ -1,0 +1,9 @@
+.page { padding-bottom: calc(170rpx + env(safe-area-inset-bottom)); }
+.favorite-count { margin-top: 18rpx; color: #7d8b84; }
+.favorite-list { display: flex; flex-direction: column; gap: 16rpx; }
+.favorite-card { padding: 28rpx; }
+.favorite-top { display: flex; align-items: center; justify-content: space-between; gap: 18rpx; }
+.favorite-title { flex: 1; font-size: 30rpx; font-weight: 700; }
+.favorite-net { color: #176047; font-family: Georgia, serif; font-size: 38rpx; font-weight: 700; }
+.favorite-place { display: block; margin: 12rpx 0; color: #738079; font-size: 23rpx; }
+.favorite-meta { display: flex; gap: 22rpx; color: #8a948f; font-size: 21rpx; }

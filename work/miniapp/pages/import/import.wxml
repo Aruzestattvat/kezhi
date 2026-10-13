@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="page-head">
+    <view><text class="eyebrow">PASTE & PARSE</text><view class="page-title">导入群消息</view></view>
+  </view>
+
+  <view class="import-card card">
+    <text class="field-label">导入到群聊</text>
+    <picker mode="selector" range="{{groupOptions}}" value="{{groupIndex}}" bindchange="changeGroup">
+      <view class="picker-field">{{groupOptions[groupIndex]}}⌄</view>
+    </picker>
+    <input wx:if="{{groupIndex === 0}}" class="field group-input" placeholder="输入群聊名称，例如：嘉兴家教群201" value="{{newGroup}}" bindinput="inputGroup" />
+
+    <text class="field-label">微信群消息原文</text>
+    <textarea class="message-input" maxlength="-1" auto-height="false" placeholder="请长按文本框，粘贴一条或多条完整家教订单……" value="{{rawText}}" bindinput="inputText" />
+    <view class="import-note">导入后会自动计算地址明确且符合条件的订单；已有路线缓存不会重复调用。路线计算仅上传起点、目的地和出行方式，不上传群聊原文。</view>
+
+    <view class="button-row">
+      <button class="secondary-button" disabled="{{importing}}" bindtap="fillSample">填入示例</button>
+      <button class="primary-button" loading="{{importing}}" disabled="{{importing}}" bindtap="parseAndImport">{{importLabel}}</button>
+    </view>
+  </view>
+
+  <view class="result-card card" wx:if="{{resultText}}">
+    <text>{{resultText}}</text>
+  </view>
+</view>

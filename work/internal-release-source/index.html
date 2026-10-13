@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从微信群消息整理家教订单，按打车、公交、共享电单车、自行车或自由出行成本计算实际净时薪。">
+  <title>课值 · 家教订单性价比助手</title>
+  <link rel="icon" href="app-logo.png" type="image/png">
+  <link rel="stylesheet" href="styles.css?v=20260827-10">
+  <style>.provider-select,.group-select{display:block;width:100%;padding:11px 13px;border:1px solid #d9d9cf;border-radius:12px;background:#faf9f4;color:#17231f}.provider-select{margin-top:7px}.provider-select:disabled{opacity:.65}.provider-key[hidden]{display:none!important}.workspace{overflow:visible}.route-card{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto}.toolbar{align-items:flex-start}.toolbar-actions{display:flex;align-items:center;justify-content:flex-end;flex:1;flex-wrap:wrap;gap:10px}.filter-group{display:flex;gap:4px;padding:3px;background:#ebe9e0;border-radius:13px}.filter{white-space:nowrap;padding:8px 12px}.group-select{width:auto;min-width:150px}.travel-mode-select{min-width:170px;font-weight:800;color:#23513f;background:#f8f6ef}.ghost-button.danger{color:#a44234;border-color:#e6c9c3;background:#fff8f6}.ghost-button:disabled{opacity:.55;cursor:not-allowed}.delete-group-option{display:flex!important;align-items:center;gap:10px;padding:13px 14px;border:1px solid #e6c9c3;border-radius:13px;background:#fff8f6}.delete-group-option input{display:inline-block!important;width:auto!important;margin:0!important;accent-color:#a44234}.mini-actions{display:flex;justify-content:flex-end;gap:5px;flex-wrap:wrap}.mini-copy,.mini-favorite{margin-top:8px;border:1px solid #d8d8cf;background:#fffdfa;color:#315b4a;border-radius:9px;padding:5px 9px;font-size:10px;font-weight:800;cursor:pointer}.mini-favorite.active{color:#9b641e;border-color:#e5c78d;background:#fff7df}.group-pages{display:grid;gap:9px;margin-top:16px}.group-page{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;border:1px solid #dfded4;background:#faf9f4;border-radius:13px;padding:13px 14px;cursor:pointer}.group-page.active{border-color:#52806c;background:#eaf1e8}.group-page small{color:#7a8780}.transit-plan{margin-top:14px;padding:13px;border:1px solid #d9d2c2;border-radius:14px;background:rgba(255,253,250,.55)}.transit-plan>strong{display:block;margin-bottom:8px}.transit-plan div{padding:7px 0;border-top:1px solid #ded8ca}.transit-plan span,.transit-plan small{display:block}.transit-plan span{font-size:12px;font-weight:800}.transit-plan small,.transit-plan p{margin:3px 0 0;color:#708078;font-size:10px;line-height:1.5}@media(max-width:980px){.route-card{position:static;max-height:none;overflow:visible}.travel-mode-select{width:100%}.toolbar-actions{width:100%;justify-content:flex-start;flex-wrap:wrap}}@media(max-width:640px){.group-select{min-width:0;flex:1}.travel-mode-select{flex:auto}}</style>
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside class="rail">
+      <div class="brand-mark">课</div>
+      <nav aria-label="主导航">
+        <button class="rail-button active" data-action="home" aria-label="订单总览">⌂</button>
+        <button class="rail-button" data-action="open-groups" aria-label="群聊分页">群</button>
+        <button class="rail-button" data-action="open-settings" aria-label="设置">⚙</button>
+      </nav>
+      <div class="rail-avatar">梁</div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div><p class="eyebrow">TUTOR VALUE · 嘉兴</p><h1>今天，哪一单更值得跑？</h1></div>
+        <div class="top-actions"><button id="bulk-recalculate" class="ghost-button" data-action="recalculate-pending">↻ 补算未完成</button><button class="ghost-button danger" data-action="open-clear-all">清空所有订单</button><button class="ghost-button" data-action="export">导出 CSV</button><button class="primary-button" data-action="open-import">＋ 导入群消息</button></div>
+      </header>
+
+      <section id="stats" class="stats-grid" aria-label="订单概览"></section>
+
+      <div class="toolbar">
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="搜索科目、年级或地址"></label>
+        <select id="travel-mode" class="group-select travel-mode-select" aria-label="选择出行方式"><option value="taxi">出行：打车</option><option value="transit">出行：公交车</option><option value="ebike">出行：共享电单车</option><option value="bicycle">出行：自行车</option><option value="free">出行：自由出行</option></select>
+        <div class="toolbar-actions">
+          <select id="group-filter" class="group-select" aria-label="按来源群分页"><option value="all">全部群聊</option></select>
+          <button id="group-recalculate" class="ghost-button" data-action="recalculate-group" disabled>↻ 先选择群聊</button>
+          <button id="group-delete" class="ghost-button danger" data-action="delete-group" disabled>清空本群订单</button>
+          <select id="teacher-gender" class="group-select" aria-label="选择自己的教员性别"><option value="any">我的性别：未设置</option><option value="male">我是男老师</option><option value="female">我是女老师</option></select>
+          <div class="filter-group" id="filters">
+            <button class="filter active" data-filter="all">全部</button>
+            <button class="filter" data-filter="pending">待确认</button>
+            <button class="filter" data-filter="passed">已 PASS</button>
+            <button class="filter" data-filter="favorites">★ 收藏夹</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <section class="orders-panel">
+          <div class="section-head"><div><p class="eyebrow">SMART RANKING</p><h2>订单性价比</h2></div><span id="result-count" class="count-pill"></span></div>
+          <div id="order-list" class="order-list"></div>
+        </section>
+        <aside id="detail-panel" class="route-card"></aside>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="import-dialog" class="modal">
+    <form method="dialog" id="import-form">
+      <div class="modal-head"><div><p class="eyebrow">IMPORT MESSAGES</p><h2>导入微信群消息</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <p class="modal-copy">可直接连续粘贴多条微信消息；系统会结合发送时间、订单编号和字段组自动分单。</p>
+      <label>导入到群聊<select id="import-group-select" class="provider-select"><option value="__new__">＋ 新建群聊</option></select></label>
+      <label id="new-group-field">新群聊名称<input id="source-group" value="嘉兴家教群" maxlength="30"></label>
+      <label>群消息<textarea id="message-input" rows="11" placeholder="例如：&#10;初二数学，地点巴黎都市，周六下午2点到4点，120元/小时&#10;&#10;高一物理，江南摩尔附近，周日19:00-21:30，150元每小时"></textarea></label>
+      <div class="form-actions"><button type="button" class="text-button" data-action="fill-sample">填入示例</button><span class="spacer"></span><button value="cancel" class="ghost-button">取消</button><button type="button" class="primary-button" data-action="parse">识别并加入</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="settings-dialog" class="modal small-modal">
+    <form method="dialog" id="settings-form">
+      <div class="modal-head"><div><p class="eyebrow">LOCAL SETTINGS</p><h2>计算设置</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <div class="notice"><strong>地图服务密钥</strong><span>仅保存在当前浏览器。出行方式可在主页面顶部切换；高德采用单程路线折算往返，以节省调用额度。</span></div>
+      <label>地图服务商<select id="map-provider" class="provider-select"><option value="amap">高德地图（省额度）</option><option value="baidu">百度地图</option></select></label>
+      <label id="amap-key-field" class="provider-key">高德 Web 服务 Key<div class="secret-field"><input id="amap-key" type="password" autocomplete="off" placeholder="粘贴高德 Web 服务 Key"><button type="button" data-action="toggle-amap-key">显示</button></div></label>
+      <label id="baidu-key-field" class="provider-key">百度地图服务端 AK<div class="secret-field"><input id="baidu-ak" type="password" autocomplete="off" placeholder="粘贴百度服务端 AK"><button type="button" data-action="toggle-ak">显示</button></div></label>
+      <div class="notice"><strong>家教地址范围</strong><span>地图查询时会自动把城市名加在订单地址前；路线单程超过设定距离的订单会自动 PASS。</span></div>
+      <label>出发点<input id="origin-address" value="嘉兴大学梁林校区"></label>
+      <div class="field-grid"><label>家教所在城市<input id="city" value="嘉兴市" placeholder="例如：嘉兴市"></label><label>最大单程距离（公里）<input id="max-one-way-km" type="number" min="1" max="500" step="1" value="20"></label></div>
+      <div class="field-grid"><label>每单缓冲时间（分钟）<input id="buffer-minutes" type="number" min="0" max="180" value="20"></label><label>未识别时默认时长（小时）<input id="default-hours" type="number" min="0.5" max="8" step="0.5" value="2"></label></div>
+      <label>最低净时薪（元）<input id="minimum-net" type="number" min="0" value="60"></label>
+      <div class="form-actions"><button type="button" class="text-button danger" data-action="open-clear-all">清空所有订单</button><span class="spacer"></span><button value="cancel" class="ghost-button">取消</button><button type="button" class="primary-button" data-action="save-settings">保存设置</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="edit-dialog" class="modal small-modal"><form method="dialog" id="edit-form"></form></dialog>
+
+  <dialog id="groups-dialog" class="modal small-modal">
+    <form method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">GROUP PAGES</p><h2>群聊分页管理</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <p class="modal-copy">每个“来源群别名”会自动成为一个独立页面。选择群聊后，只显示该群的订单。</p>
+      <div id="group-pages" class="group-pages"></div>
+      <div class="form-actions"><span class="spacer"></span><button value="cancel" class="primary-button">完成</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="delete-group-dialog" class="modal small-modal">
+    <form method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">CLEAR GROUP ORDERS</p><h2>清空群聊订单</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <div class="notice"><strong id="delete-group-title">即将清空所选群聊</strong><span id="delete-group-message">该操作无法恢复。</span></div>
+      <label class="delete-group-option"><input id="delete-group-too" type="checkbox"> <span>同时删除群聊页面</span></label>
+      <p class="modal-copy">不勾选时，仅删除群内全部订单，群聊页面会保留，可继续向其中导入新消息。</p>
+      <div class="form-actions"><span class="spacer"></span><button value="cancel" class="ghost-button">取消</button><button type="button" class="primary-button" data-action="confirm-delete-group">确认删除</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="clear-all-dialog" class="modal small-modal">
+    <form method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">CLEAR ALL ORDERS</p><h2>清空所有订单</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
+      <div class="notice"><strong id="clear-all-title">即将删除全部普通订单</strong><span>订单删除后无法恢复；收藏内容默认受到保护。</span></div>
+      <label class="delete-group-option"><input id="clear-all-groups" type="checkbox"> <span>同时删除所有群聊页面</span></label>
+      <label class="delete-group-option"><input id="clear-all-favorites" type="checkbox"> <span>同时删除收藏内容</span></label>
+      <p class="modal-copy">只有勾选“同时删除收藏内容”时，收藏夹里的订单快照才会被删除。</p>
+      <div class="form-actions"><span class="spacer"></span><button value="cancel" class="ghost-button">取消</button><button type="button" class="primary-button" data-action="confirm-clear-all">确认清空</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="parser.js?v=20260827-12" defer></script>
+  <script src="app.js?v=20260827-12" defer></script>
+</body>
+</html>

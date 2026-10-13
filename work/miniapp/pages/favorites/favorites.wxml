@@ -1,0 +1,18 @@
+<view class="page">
+  <view class="page-head">
+    <view><text class="eyebrow">FAVORITES</text><view class="page-title">收藏夹</view></view>
+    <text class="favorite-count">{{orders.length}} 条</text>
+  </view>
+
+  <view class="favorite-list" wx:if="{{orders.length}}">
+    <view class="favorite-card card" wx:for="{{orders}}" wx:key="id" data-id="{{item.id}}" bindtap="openDetail">
+      <view class="favorite-top"><text class="favorite-title">{{item.title}}</text><text class="favorite-net">{{item.netLabel}}</text></view>
+      <text class="favorite-place">{{item.address || '地址待确认'}} · {{item.source}}</text>
+      <view class="favorite-meta"><text>{{item.rateLabel}}</text><text>{{item.modeLabel}}</text><text>{{item.travelCostLabel}}</text></view>
+    </view>
+  </view>
+  <view class="empty card" wx:else>
+    <text class="empty-title">收藏夹还是空的</text>
+    <text class="empty-copy">打开订单详情，点击“收藏这单”即可保存。</text>
+  </view>
+</view>

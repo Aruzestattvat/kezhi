@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/groups/groups",
+    "pages/favorites/favorites",
+    "pages/settings/settings",
+    "pages/import/import",
+    "pages/detail/detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#f5f1e7",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "课值",
+    "backgroundColor": "#f5f1e7",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#7b857f",
+    "selectedColor": "#155b47",
+    "backgroundColor": "#fffdf8",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "订单" },
+      { "pagePath": "pages/groups/groups", "text": "群聊" },
+      { "pagePath": "pages/favorites/favorites", "text": "收藏" },
+      { "pagePath": "pages/settings/settings", "text": "设置" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

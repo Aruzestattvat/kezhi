@@ -1,0 +1,5 @@
+.import-card { padding: 30rpx; }
+.group-input { margin-top: 14rpx; }
+.message-input { width: 100%; height: 580rpx; padding: 24rpx; border: 1rpx solid #dedacf; border-radius: 22rpx; background: #faf8f2; line-height: 1.65; }
+.import-note { margin-top: 16rpx; color: #89938e; font-size: 21rpx; line-height: 1.6; }
+.result-card { margin-top: 18rpx; padding: 22rpx; color: #24674f; }

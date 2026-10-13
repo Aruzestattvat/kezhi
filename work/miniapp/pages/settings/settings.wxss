@@ -1,0 +1,12 @@
+.page { padding-bottom: calc(170rpx + env(safe-area-inset-bottom)); }
+.settings-card { margin-bottom: 18rpx; padding: 30rpx; }
+.section-title { display: block; margin-bottom: 8rpx; font-size: 31rpx; font-weight: 800; }
+.setting-note { margin-top: 14rpx; color: #87918c; font-size: 21rpx; line-height: 1.65; }
+.fixed-service { display: flex; align-items: center; gap: 18rpx; margin: 22rpx 0 8rpx; padding: 22rpx; border-radius: 20rpx; background: #e5efe9; color: #175c48; }
+.fixed-service text { display: block; }
+.service-title { font-size: 28rpx; font-weight: 800; }
+.service-dot { width: 18rpx; height: 18rpx; border-radius: 50%; background: #f49a55; box-shadow: 0 0 0 8rpx rgba(244, 154, 85, .13); }
+.two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18rpx; }
+.save-button { width: 100%; margin: 24rpx 0; }
+.danger-zone { padding: 30rpx; }
+.danger-zone .danger-button { width: 100%; margin-top: 24rpx; }

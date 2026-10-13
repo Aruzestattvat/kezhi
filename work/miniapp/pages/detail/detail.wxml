@@ -1,0 +1,49 @@
+<view class="page" wx:if="{{order}}">
+  <view class="detail-head">
+    <view>
+      <text class="eyebrow">ORDER DETAIL</text>
+      <view class="detail-title">{{order.grade || '年级待确认'}} · {{order.subject || '科目待确认'}}</view>
+    </view>
+    <view class="tag {{order.statusClass}}">{{order.statusLabel}}</view>
+  </view>
+
+  <view class="route-card card">
+    <view class="route-source"><text class="dot orange"></text><text>{{order.routeSourceLabel}}</text></view>
+    <view class="route-point"><text class="dot green"></text><view><text class="route-label">出发点</text><text>{{settings.origin}}</text></view></view>
+    <view class="route-point"><text class="dot orange"></text><view><text class="route-label">当前订单</text><text>{{order.address || '地址待确认'}}</text><text class="route-label" wx:if="{{order.resolvedMapAddress}}">地图定位：{{order.resolvedMapAddress}}</text></view></view>
+
+    <view class="metrics">
+      <view><text class="metric-label">出行方式</text><text>{{order.modeLabel}}</text></view>
+      <view><text class="metric-label">往返用时</text><text>{{order.minutesLabel}}</text></view>
+      <view><text class="metric-label">授课时长</text><text>{{order.hoursLabel}}</text></view>
+      <view><text class="metric-label">往返出行费</text><text>{{order.travelCostLabel}}</text></view>
+      <view><text class="metric-label">课时收入</text><text>{{order.incomeLabel}}</text></view>
+      <view><text class="metric-label">净现金收益</text><text>{{order.cashNetLabel}}</text></view>
+      <view><text class="metric-label">实际净时薪</text><text>{{order.netLabel}}</text></view>
+      <view><text class="metric-label">预估月收入</text><text>{{order.monthlyIncomeLabel}}</text></view>
+      <view><text class="metric-label">往返距离</text><text>{{order.distanceLabel}}</text></view>
+    </view>
+    <view class="pass-note" wx:if="{{order.passReason}}">自动 PASS：{{order.passReason}}</view>
+    <view class="route-error" wx:if="{{order.routeError}}">{{order.routeError}}</view>
+  </view>
+
+  <view class="info-card card">
+    <view class="info-row"><text>来源群</text><text>{{order.source}}</text></view>
+    <view class="info-row"><text>订单号</text><text>{{order.orderCode || '未识别'}}</text></view>
+    <view class="info-row"><text>薪资</text><text>{{order.rateLabel}}</text></view>
+    <view class="info-row"><text>每周次数</text><text>{{order.weeklyLabel}}</text></view>
+    <view class="info-row"><text>可上课星期</text><text>{{order.weekdayLabel}}</text></view>
+    <view class="info-row"><text>时间安排</text><text>{{order.schedule || '待确认'}}</text></view>
+  </view>
+
+  <view class="raw-card card">
+    <text class="raw-title">群聊原文</text>
+    <text class="raw-text">{{order.rawText}}</text>
+  </view>
+
+  <view class="detail-actions">
+    <button class="secondary-button" bindtap="toggleFavorite">{{isFavorite ? '★ 已收藏' : '☆ 收藏这单'}}</button>
+    <button class="secondary-button" bindtap="copyOrder">复制完整信息</button>
+    <button class="primary-button" loading="{{calculating}}" disabled="{{calculateDisabled}}" bindtap="calculate">重新计算</button>
+  </view>
+</view>

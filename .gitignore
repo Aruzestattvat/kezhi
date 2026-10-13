@@ -1,0 +1,13 @@
+node_modules/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+secret.local.js
+project.private.config.json
+work/pyinstaller-build-deps/
+work/pyinstaller-deps/
+work/desktop-build/
+work/desktop-dist/
+*.log

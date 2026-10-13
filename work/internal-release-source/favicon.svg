@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="18" fill="#cbe45c"/>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="none" stroke="#edf8af" stroke-width="2"/>
+  <text x="32" y="43" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="800" fill="#173a30">课</text>
+</svg>

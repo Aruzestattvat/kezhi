@@ -1,0 +1,160 @@
+page {
+  min-height: 100%;
+  background: #f5f1e7;
+  color: #142720;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+}
+
+view, text, input, textarea, button, picker, switch {
+  box-sizing: border-box;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border-radius: 24rpx;
+  font-size: 29rpx;
+  line-height: 1.25;
+  text-align: center;
+}
+
+button::after {
+  border: 0;
+}
+
+.page {
+  padding: 30rpx 26rpx 48rpx;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 26rpx;
+}
+
+.eyebrow {
+  color: #718078;
+  font-size: 20rpx;
+  font-weight: 700;
+  letter-spacing: 3rpx;
+}
+
+.page-title {
+  margin-top: 8rpx;
+  font-size: 48rpx;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.primary-button {
+  min-height: 80rpx;
+  padding: 0 28rpx;
+  background: #175c48;
+  color: #fff;
+  font-size: 29rpx;
+  font-weight: 700;
+  box-shadow: 0 12rpx 26rpx rgba(23, 92, 72, .14);
+}
+
+.secondary-button {
+  min-height: 76rpx;
+  padding: 0 24rpx;
+  background: #fffdf8;
+  color: #175c48;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: 1rpx solid #dcd8cb;
+}
+
+.danger-button {
+  min-height: 76rpx;
+  padding: 0 24rpx;
+  background: #fff8f4;
+  color: #a14d3d;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: 1rpx solid #ead6cf;
+}
+
+.card {
+  background: #fffdf9;
+  border: 1rpx solid #e3dfd3;
+  border-radius: 30rpx;
+  box-shadow: 0 10rpx 30rpx rgba(43, 58, 50, .05);
+}
+
+.muted {
+  color: #7d8a83;
+}
+
+.empty {
+  padding: 90rpx 36rpx;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  margin-bottom: 12rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.empty-copy {
+  color: #89938d;
+  line-height: 1.7;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  background: #eeece4;
+  color: #68736d;
+  font-size: 21rpx;
+}
+
+.tag-green { background: #e5f0e9; color: #23684f; }
+.tag-warn { background: #f9eadc; color: #9a5e2c; }
+.tag-pass { background: #f5e4df; color: #9c4c3d; }
+
+.field-label {
+  display: block;
+  margin: 24rpx 0 12rpx;
+  color: #5d6b64;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.field,
+.picker-field {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 1rpx solid #dedacf;
+  border-radius: 22rpx;
+  background: #fffdf9;
+  color: #183028;
+  font-size: 28rpx;
+}
+
+.picker-field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.button-row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+
+.button-row button { flex: 1; }

@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="page-head"><view><text class="eyebrow">SETTINGS</text><view class="page-title">应用设置</view></view></view>
+
+  <form bindsubmit="save">
+    <view class="settings-card card">
+      <text class="section-title">路线与收益</text>
+      <view class="fixed-service">
+        <view class="service-dot"></view>
+        <view>
+          <text class="service-title">高德地图云端路线</text>
+        </view>
+      </view>
+
+      <text class="field-label">固定出发点</text>
+      <input class="field" name="origin" value="{{settings.origin}}" placeholder="嘉兴大学梁林校区" />
+      <text class="field-label">家教所在城市</text>
+      <input class="field" name="city" value="{{settings.city}}" placeholder="嘉兴市" />
+
+      <view class="two-columns">
+        <view><text class="field-label">单程距离上限 km</text><input class="field" name="maxOneWayKm" type="digit" value="{{settings.maxOneWayKm}}" /></view>
+        <view><text class="field-label">准备缓冲分钟</text><input class="field" name="bufferMinutes" type="number" value="{{settings.bufferMinutes}}" /></view>
+        <view><text class="field-label">默认授课小时</text><input class="field" name="defaultHours" type="digit" value="{{settings.defaultHours}}" /></view>
+        <view><text class="field-label">净时薪门槛</text><input class="field" name="minimumNet" type="number" value="{{settings.minimumNet}}" /></view>
+      </view>
+    </view>
+
+    <view class="settings-card card">
+      <text class="section-title">个人筛选</text>
+      <text class="field-label">我是</text>
+      <picker mode="selector" range="{{genderLabels}}" value="{{genderIndex}}" bindchange="changeGender">
+        <view class="picker-field">{{genderLabels[genderIndex]}}⌄</view>
+      </picker>
+      <view class="setting-note">系统会自动 PASS 明确要求其他性别，以及要求在职、专职或全职老师的订单。</view>
+    </view>
+
+    <button class="primary-button save-button" form-type="submit">保存设置</button>
+  </form>
+
+  <view class="danger-zone card">
+    <text class="section-title">数据管理</text>
+    <text class="setting-note">订单、群聊、收藏和路线缓存目前仅保存在这台设备。</text>
+    <button class="danger-button" bindtap="clearAll">删除所有订单…</button>
+  </view>
+</view>
